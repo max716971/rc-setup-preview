@@ -1356,3 +1356,17 @@ input:focus,select:focus,textarea:focus{border-color:rgba(197,43,50,.65);box-sha
 
 /* Accueil : éviter la césure automatique du mot « supérieure » */
 #dashboardView .home-hero h1 em{hyphens:none;-webkit-hyphens:none}
+
+
+/* Améliorations transférées depuis la bêta — identité rouge de Prévisualisation conservée. */
+#setupsView .setups-heading-top .heading-actions{flex:0 0 auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;min-width:0}
+#setupsView .setups-heading-top .heading-actions .setups-compare-button{grid-column:1/-1;width:100%;min-height:36px}
+#setupsView .setup-filter-actions{margin:10px 0 0}
+#setupsView .setup-filter-grid>label{min-width:0}
+#setupsView .setup-filter-grid>label input[type=date]{width:100%;min-width:0}
+.car-manual-add-panel{margin:14px 0 18px;padding:16px 18px;border-color:rgba(197,43,50,.28);background:linear-gradient(145deg,rgba(197,43,50,.075),rgba(18,27,42,.96))}
+.car-manual-add-panel .catalog-note{margin:0 0 12px;color:var(--muted);font-size:12px;line-height:1.55}
+.car-manual-add-panel .actions-row{margin:0}
+.setup-completeness{border-left:3px solid var(--accent);padding-left:13px}
+.setup-completeness>p:last-child{font-size:11px;line-height:1.6;color:var(--muted)}
+@media(max-width:700px){#setupsView .setups-heading-top .heading-actions{width:100%;grid-template-columns:repeat(2,minmax(0,1fr))}#setupsView .setups-heading-top .heading-actions .button{min-width:0;white-space:nowrap}}
