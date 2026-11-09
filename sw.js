@@ -1,5 +1,5 @@
-const CACHE_NAME = 'rc-setup-preview-v7';
-const APP_SHELL = ['./', './index.html', './app.css?v=62', './materials.css?v=42', './app.js?v=170', './materials.js?v=113', './backup.js?v=3', './manifest.webmanifest', './assets/rc-setup-logo.svg', './icon.svg'];
+const CACHE_NAME = 'rc-setup-preview-v8';
+const APP_SHELL = ['./', './index.html', './app.css?v=63', './materials.css?v=42', './app.js?v=171', './materials.js?v=113', './backup.js?v=3', './manifest.webmanifest', './assets/rc-setup-logo.svg', './icon.svg'];
 self.addEventListener('install', event => { event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_SHELL))); self.skipWaiting(); });
 self.addEventListener('activate', event => { event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => /^rc-setup-preview-v\d+$/.test(key) && key !== CACHE_NAME).map(key => caches.delete(key))))); self.clients.claim(); });
 const LOGO_HOSTS = new Set(['www.hobbywingdirect.com','apps.associatedelectrics.com','schumacher-racing.com','atomfire.com','6mik-racing.com','cdn.houseofrc.com','www.cmldistribution.co.uk','www.wartelle-shop.com','upload.wikimedia.org','www.pr-rc.com']);
