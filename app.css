@@ -1398,3 +1398,64 @@ input:focus,select:focus,textarea:focus{border-color:rgba(197,43,50,.65);box-sha
  .setup-filter-heading h2{font-size:14px}
  .setup-filter-heading p{font-size:10px}
 }
+
+
+/* Correctifs ciblés Setups : même cadrage que la bêta, thème rouge Preview conservé. */
+#setupsView .setups-heading-top .heading-actions {
+  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: max-content max-content;
+  gap: 9px;
+  width: auto;
+}
+#setupsView .setups-heading-top .heading-actions .setups-compare-button {
+  grid-column: 1 / -1;
+  width: 100%;
+  min-height: 36px;
+}
+#setupsView .setups-heading-top .heading-actions .button {
+  width: auto;
+  min-width: 0;
+  min-height: 36px;
+  padding-inline: 12px;
+  white-space: nowrap;
+}
+
+/* Tous les filtres occupent exactement leur cellule, dont « Toutes les adhérences ». */
+.setup-library-filters > input,
+.setup-library-filters > select {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+}
+
+/* Les deux dates restent côte à côte sur une seule ligne. */
+.setup-library-filters .setup-date-range {
+  grid-column: span 2;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  min-width: 0;
+}
+.setup-library-filters .setup-date-range label,
+.setup-library-filters .setup-date-range input {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+}
+
+@media (max-width: 700px) {
+  #setupsView .setups-heading-top .heading-actions {
+    width: auto;
+    grid-template-columns: max-content max-content;
+  }
+  #setupsView .setups-heading-top .heading-actions .button {
+    width: auto;
+    min-height: 36px;
+    padding-inline: 12px;
+    white-space: nowrap;
+  }
+  .setup-library-filters .setup-date-range {
+    grid-column: 1 / -1;
+  }
+}
