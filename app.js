@@ -6947,7 +6947,7 @@ function importJson(file) {
 async function refreshAppWorker() {
   // Le service worker gère ses propres caches. Ne jamais supprimer les caches
   // ici : CacheStorage est partagé entre les applications du même origin.
-  const registration = await navigator.serviceWorker.register('./sw.js?v=5', { updateViaCache: 'none' });
+  const registration = await navigator.serviceWorker.register('./sw.js?v=6', { updateViaCache: 'none' });
   await registration.update();
   return registration;
 }

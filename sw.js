@@ -1,5 +1,5 @@
-const CACHE_NAME = 'rc-setup-preview-v5';
-const APP_SHELL = ['./', './index.html', './app.css?v=61', './materials.css?v=41', './app.js?v=168', './materials.js?v=112', './backup.js?v=3', './manifest.webmanifest', './assets/rc-setup-logo.svg', './icon.svg'];
+const CACHE_NAME = 'rc-setup-preview-v6';
+const APP_SHELL = ['./', './index.html', './app.css?v=61', './materials.css?v=41', './app.js?v=169', './materials.js?v=112', './backup.js?v=3', './manifest.webmanifest', './assets/rc-setup-logo.svg', './icon.svg'];
 self.addEventListener('install', event => { event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_SHELL))); self.skipWaiting(); });
 self.addEventListener('activate', event => { event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => /^rc-setup-preview-v\d+$/.test(key) && key !== CACHE_NAME).map(key => caches.delete(key))))); self.clients.claim(); });
 const LOGO_HOSTS = new Set(['www.hobbywingdirect.com','apps.associatedelectrics.com','schumacher-racing.com','atomfire.com','6mik-racing.com','cdn.houseofrc.com','www.cmldistribution.co.uk','www.wartelle-shop.com','upload.wikimedia.org','www.pr-rc.com']);
@@ -23,16 +23,16 @@ self.addEventListener('fetch', event => {
         return (await caches.match(event.request)) || new Response('', { status: 504 });
       }
     }
-    const cached = await caches.match(event.request);
-    if (cached) return cached;
     try {
-      const response = await fetch(event.request);
+      const response = await fetch(event.request, { cache: 'no-cache' });
       if (response.ok) {
         const copy = response.clone();
         caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
       }
       return response;
     } catch {
+      const cached = await caches.match(event.request);
+      if (cached) return cached;
       // index.html is a fallback only for page navigation, never for JS/CSS/assets.
       if (event.request.mode === 'navigate') {
         return (await caches.match('./index.html')) || new Response('Application hors ligne indisponible.', { status: 503 });
