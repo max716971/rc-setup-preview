@@ -1354,6 +1354,12 @@ input:focus,select:focus,textarea:focus{border-color:rgba(197,43,50,.65);box-sha
 @media(max-width:480px){.home-hero{min-height:0;padding:25px 20px;border-radius:18px}.home-hero h1{font-size:39px}.home-hero-copy>p{font-size:12px}.home-overview,.home-workspace,.home-shortcuts{padding:14px;border-radius:16px}.home-stats{gap:7px}.home-stat{grid-template-columns:1fr;grid-template-rows:auto auto auto auto;padding:10px 8px;text-align:center;justify-items:center}.home-stat-icon{grid-row:auto;width:32px;height:32px;font-size:16px}.home-stat strong{font-size:23px}.home-stat>b{margin-top:8px;padding-top:7px;font-size:8px}.home-workspace-grid{gap:7px}.home-work-card{min-height:76px;padding:9px;gap:8px}.home-work-icon{flex-basis:32px;width:32px;height:32px;font-size:16px}.home-work-copy strong{font-size:10px}.home-work-copy small{font-size:8px}.home-section-title h2{font-size:19px}.home-section-note{font-size:9px}.home-privacy{align-items:flex-start}.home-privacy p{font-size:9px}}
 .topbar{margin-bottom:20px}
 
+/* Voitures : conserver les quatre actions sur une ligne sur mobile. */
+@media(max-width:560px){
+ .car-card-actions{flex-wrap:nowrap;gap:4px}
+ .car-card-actions .button{flex:1 1 0;min-width:0;min-height:36px;padding:0 3px;font-size:9px;white-space:nowrap;letter-spacing:-.02em}
+}
+
 /* Accueil : éviter la césure automatique du mot « supérieure » */
 #dashboardView .home-hero h1 em{hyphens:none;-webkit-hyphens:none}
 
