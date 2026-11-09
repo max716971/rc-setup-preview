@@ -41,6 +41,8 @@ jobs:
           node --check seed-xtr-oils.js
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
+        with:
+          enablement: true
       - name: Upload preview site
         uses: actions/upload-pages-artifact@v3
         with:
