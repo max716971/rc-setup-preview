@@ -6760,11 +6760,14 @@ function showSetup(id) {
   ];
   const content = document.getElementById('setupDetails');
   const photoSection = setup.photos?.length ? `<section class="detail-group"><h3>Photos du setup</h3><div class="setup-gallery">${setup.photos.map((photo, index) => `<a href="${photo}" target="_blank" rel="noopener"><img src="${photo}" alt="Photo ${index + 1} du setup" loading="lazy"></a>`).join('')}</div></section>` : '';
+  const completionChecks=[['Pneus avant','frontTires'],['Pneus arrière','rearTires'],['Amortisseurs avant','frontShocks'],['Amortisseurs arrière','rearShocks'],['Ressorts avant','frontSpring'],['Ressorts arrière','rearSpring'],['Modifications testées','testedChanges'],['Bilan de la séance','testConclusion']];
+  const missingCompletion=completionChecks.filter(([,field])=>!String(setup[field]||'').trim()).map(([label])=>label);
+  const completionMarkup=missingCompletion.length?`<section class="detail-group setup-completeness"><h3>Repères facultatifs à compléter</h3><p class="item-sub">Cette fiche reste parfaitement utilisable. Si tu as ces informations, tu peux les ajouter pour faciliter les comparaisons et le suivi des essais :</p><p>${missingCompletion.map(escapeHtml).join(' · ')}</p></section>`:'';
   content.innerHTML = `<div class="pdf-action-banner"><div><strong>Ta fiche prête à imprimer ou enregistrer</strong><span>PDF A4 avec amortisseurs avant puis arrière, et tous les réglages classés.</span></div><button class="button button-primary pdf-main-button" id="detailPrintSetupTop" type="button">⇩ Imprimer / PDF</button></div><span class="kicker">FICHE DE RÉGLAGES</span><h2>${escapeHtml(setup.setupName ? setup.setupName+' · ' : '')}${escapeHtml(getSetupCarName(setup) || 'Voiture inconnue')} <span class="arrow">→</span> ${escapeHtml(trackName)}</h2><p class="dialog-subtitle">${escapeHtml(setup.surface||track?.surface||'')} ${(setup.grip||track?.grip)?'· '+escapeHtml(setup.grip||track?.grip):''} ${setup.weather ? '· '+escapeHtml(setup.weather) : ''} ${setup.temperature ? `· ${escapeHtml(setup.temperature)}` : ''}</p>` + photoSection + groups.map(([title, fields]) => {
     const filled = fields.filter(([, value]) => value);
     if (!filled.length) return '';
     return `<section class="detail-group"><h3>${escapeHtml(title)}</h3><dl>${filled.map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join('')}</dl></section>`;
-  }).join('');
+  }).join('') + completionMarkup;
   if(setup.isShared||setup.sharedBy)content.insertAdjacentHTML('afterbegin','<div class="shared-setup-banner"><strong>↗ SETUP PARTAGÉ</strong><span>Propriétaire : '+escapeHtml(setup.sharedBy||'Pilote inconnu')+'</span></div>');
   const history=Array.isArray(setup.history)?setup.history:[];
   const proposals=Array.isArray(setup.testProposals)?setup.testProposals:[];
@@ -7060,6 +7063,12 @@ document.getElementById('setupForm').elements.namedItem('carId').addEventListene
 ['frontDiffType','centerDiffType','rearDiffType','slipperPresence'].forEach(name=>document.getElementById('setupForm').elements.namedItem(name).addEventListener('change',updateVehicleSpecificFields));
 document.getElementById('setupSearch')?.addEventListener('input',renderSetups);
 ['setupCarFilter','setupTrackFilter','setupSurfaceFilter','setupGripFilter','setupDateFrom','setupDateTo'].forEach(id=>document.getElementById(id)?.addEventListener('change',renderSetups));
+document.getElementById('resetSetupLibraryFilters')?.addEventListener('click',()=>{
+  const search=document.getElementById('setupSearch');if(search)search.value='';
+  ['setupCarFilter','setupTrackFilter','setupSurfaceFilter','setupGripFilter','setupDateFrom','setupDateTo'].forEach(id=>{const field=document.getElementById(id);if(field)field.value='';});
+  renderSetups();
+  showToast('Tous les filtres de setups ont été réinitialisés.');
+});
 document.getElementById('compareSetupsButton')?.addEventListener('click',compareSetups);
 document.getElementById('calculateGearingButton')?.addEventListener('click',calculateGearing);
 document.getElementById('diagnoseSetupButton')?.addEventListener('click',runSetupDiagnosis);
