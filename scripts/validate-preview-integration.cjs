@@ -53,9 +53,11 @@ assert((html.match(/id="backupPanel"/g) || []).length === 1, 'un seul panneau de
 
 assert(html.includes('data-shortcut-view="tools" data-shortcut-target="setupComparisonPanel"'), 'raccourci comparaison vers Outils');
 assert(html.includes('data-shortcut-view="help" data-shortcut-target="backupPanel"'), 'raccourci sauvegarde vers Aide');
-assert(html.includes('app.js?v=168'), 'version app.js cohérente dans index.html');
-assert(app.includes("navigator.serviceWorker.register('./sw.js?v=5'"), 'enregistrement du Service Worker versionné');
-assert(sw.includes("const CACHE_NAME = 'rc-setup-preview-v5'") && sw.includes('./app.js?v=168'), 'cache Service Worker cohérent');
+assert(html.includes('app.js?v=169'), 'version app.js cohérente dans index.html');
+assert(app.includes("navigator.serviceWorker.register('./sw.js?v=6'"), 'enregistrement du Service Worker versionné');
+assert(sw.includes("const CACHE_NAME = 'rc-setup-preview-v6'") && sw.includes('./app.js?v=169') && sw.includes('./app.css?v=61'), 'cache Service Worker cohérent');
+assert(sw.includes("/^rc-setup-preview-v\\d+$/.test(key) && key !== CACHE_NAME"), 'nettoyage limité aux caches de la prévisualisation');
+assert(sw.indexOf('const response = await fetch(event.request)') < sw.indexOf('const cached = await caches.match(event.request);\n      if (cached) return cached;'), 'récupération réseau prioritaire avec secours hors ligne');
 
 assert(app.includes('rc-setup-preview-v1') && materials.includes('rc-setup-preview-materials-v1') && backup.includes('rc-setup-preview-backups'), 'espaces de stockage propres à la prévisualisation');
 assert(!/rc-setup-beta/.test(app + materials + backup + sw), 'aucune clé bêta dans les fichiers de l’application');
