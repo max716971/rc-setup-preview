@@ -34,6 +34,16 @@ const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]);
 const duplicates = [...new Set(ids.filter((id, index) => ids.indexOf(id) !== index))];
 assert(duplicates.length === 0, 'tous les identifiants HTML sont uniques');
 
+const navTargets = [...html.matchAll(/data-nav-target="([^"]+)"/g)].map((match) => match[1]);
+const shortcutTargets = [...html.matchAll(/data-shortcut-target="([^"]+)"/g)].map((match) => match[1]);
+assert(navTargets.length > 0 && navTargets.every((target) => ids.includes(target)), 'toutes les cibles de navigation existent');
+assert(shortcutTargets.length > 0 && shortcutTargets.every((target) => ids.includes(target)), 'toutes les cibles des raccourcis existent');
+for (const id of ['setupLibrarySearch', 'setupLibraryCarFilter', 'setupLibraryTrackFilter', 'setupLibraryTypeFilter', 'setupLibrarySurfaceFilter', 'setupLibraryGripFilter', 'setupLibraryDateFrom', 'setupLibraryDateTo', 'toolGearingPanel', 'toolDiagnosisPanel', 'toolBatteryPanel', 'toolMaintenancePanel', 'helpSection01', 'helpSection09', 'helpSection11']) {
+  assert(ids.includes(id), 'section ou filtre présent : ' + id);
+}
+assert(app.includes('function navigateToTarget(') && app.includes('function startSetupForCar('), 'navigation ciblée et création setup depuis une voiture présentes');
+
+
 for (const tag of ['section', 'details', 'form', 'div']) {
   const open = (html.match(new RegExp('<' + tag + '\\b', 'g')) || []).length;
   const close = (html.match(new RegExp('</' + tag + '>', 'g')) || []).length;
@@ -53,9 +63,9 @@ assert((html.match(/id="backupPanel"/g) || []).length === 1, 'un seul panneau de
 
 assert(html.includes('data-shortcut-view="tools" data-shortcut-target="setupComparisonPanel"'), 'raccourci comparaison vers Outils');
 assert(html.includes('data-shortcut-view="help" data-shortcut-target="backupPanel"'), 'raccourci sauvegarde vers Aide');
-assert(html.includes('app.js?v=169'), 'version app.js cohérente dans index.html');
+assert(html.includes('app.js?v=171'), 'version app.js cohérente dans index.html');
 assert(app.includes("navigator.serviceWorker.register('./sw.js?v=6'"), 'enregistrement du Service Worker versionné');
-assert(sw.includes("const CACHE_NAME = 'rc-setup-preview-v6'") && sw.includes('./app.js?v=169') && sw.includes('./app.css?v=61'), 'cache Service Worker cohérent');
+assert(sw.includes("const CACHE_NAME = 'rc-setup-preview-v8'") && sw.includes('./app.js?v=171') && sw.includes('./app.css?v=63'), 'cache Service Worker cohérent');
 assert(sw.includes("/^rc-setup-preview-v\\d+$/.test(key) && key !== CACHE_NAME"), 'nettoyage limité aux caches de la prévisualisation');
 const sameOriginFetch = sw.slice(sw.indexOf('    try {\n      const response = await fetch(event.request, { cache: \'no-cache\' });'));
 assert(sameOriginFetch.indexOf('fetch(event.request, { cache: \'no-cache\' })') < sameOriginFetch.indexOf('const cached = await caches.match(event.request);\n      if (cached) return cached;'), 'revalidation réseau prioritaire avec secours hors ligne');
