@@ -1,0 +1,32 @@
+name: Validate RC SETUP preview integration
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - "integration/**"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check JavaScript syntax
+        run: |
+          node --check app.js
+          node --check materials.js
+          node --check backup.js
+          node --check sw.js
+          node --check scripts/validate-preview-integration.cjs
+      - name: Check preview integration invariants
+        run: node scripts/validate-preview-integration.cjs
