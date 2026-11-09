@@ -1,0 +1,50 @@
+name: Deploy RC SETUP preview
+on:
+  push:
+    branches:
+      - preview-build
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-preview
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout preview branch
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check JavaScript syntax
+        run: |
+          node --check app.js
+          node --check materials.js
+          node --check backup.js
+          node --check sw.js
+          node --check hobbywing-setup-picker.js
+          node --check setup-material-pickers.js
+          node --check seed-hobbywing-motors.js
+          node --check seed-hobbywing.js
+          node --check seed-schumacher.js
+          node --check seed-xtr-oils.js
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Upload preview site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - name: Deploy preview
+        id: deployment
+        uses: actions/deploy-pages@v4
