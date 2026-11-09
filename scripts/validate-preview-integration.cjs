@@ -19,7 +19,7 @@ function assert(condition, message) {
 function sectionBounds(id) {
   const start = html.indexOf('<section id="' + id + '"');
   if (start < 0) throw new Error('Section introuvable : ' + id);
-  const re = /<section\\b[^>]*>|<\\/section>/g;
+  const re = /<section\b[^>]*>|<\/section>/g;
   re.lastIndex = start;
   let depth = 0;
   let match;
@@ -30,12 +30,12 @@ function sectionBounds(id) {
   throw new Error('Section non fermée : ' + id);
 }
 
-const ids = [...html.matchAll(/\\bid="([^"]+)"/g)].map((match) => match[1]);
+const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]);
 const duplicates = [...new Set(ids.filter((id, index) => ids.indexOf(id) !== index))];
 assert(duplicates.length === 0, 'tous les identifiants HTML sont uniques');
 
 for (const tag of ['section', 'details', 'form', 'div']) {
-  const open = (html.match(new RegExp('<' + tag + '\\\\b', 'g')) || []).length;
+  const open = (html.match(new RegExp('<' + tag + '\\b', 'g')) || []).length;
   const close = (html.match(new RegExp('</' + tag + '>', 'g')) || []).length;
   assert(open === close, 'balises ' + tag + ' équilibrées (' + open + '/' + close + ')');
 }
