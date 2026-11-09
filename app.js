@@ -5903,20 +5903,8 @@ function renderDashboard() {
       const owner=document.createElement('p');owner.className='shared-setup-owner';owner.textContent='Propriétaire : '+(setup.sharedBy||'Pilote inconnu');
       item.querySelector('.item-main')?.append(owner);
     }
-    if(setup.isShared||setup.sharedBy){
-      item.classList.add('shared-setup-card');
-      const tag=item.querySelector('.setup-tag');
-      if(tag){tag.classList.add('shared-setup-tag');tag.textContent='↗ PARTAGÉ · '+(setup.sharedBy||'Pilote inconnu');}
-      const owner=document.createElement('p');owner.className='shared-setup-owner';owner.textContent='Propriétaire : '+(setup.sharedBy||'Pilote inconnu');
-      item.querySelector('.item-main')?.append(owner);
-    }
-    if(setup.isShared||setup.sharedBy){
-      item.classList.add('shared-setup-card');
-      const tag=item.querySelector('.setup-tag');
-      if(tag){tag.classList.add('shared-setup-tag');tag.textContent='↗ PARTAGÉ · '+(setup.sharedBy||'Pilote inconnu');}
-      const owner=document.createElement('p');owner.className='shared-setup-owner';owner.textContent='Propriétaire : '+(setup.sharedBy||'Pilote inconnu');
-      item.querySelector('.item-main')?.append(owner);
-    }
+
+
     container.append(item);
   });
   container.querySelectorAll('.view-setup').forEach(button=>button.addEventListener('click',()=>showSetup(button.dataset.id)));
