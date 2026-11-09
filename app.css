@@ -1361,9 +1361,13 @@ input:focus,select:focus,textarea:focus{border-color:rgba(197,43,50,.65);box-sha
 /* Améliorations transférées depuis la bêta — identité rouge de Prévisualisation conservée. */
 #setupsView .setups-heading-top .heading-actions{flex:0 0 auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;min-width:0}
 #setupsView .setups-heading-top .heading-actions .setups-compare-button{grid-column:1/-1;width:100%;min-height:36px}
-#setupsView .setup-filter-actions{margin:10px 0 0}
-#setupsView .setup-filter-grid>label{min-width:0}
-#setupsView .setup-filter-grid>label input[type=date]{width:100%;min-width:0}
+#toolsView .setup-filter-actions{margin:10px 0 0}
+#toolsView .setup-filter-grid>label{min-width:0}
+#toolsView .setup-filter-grid>label input[type=date]{width:100%;min-width:0}
+#toolsView .setup-date-range{grid-column:span 2;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;min-width:0}
+#toolsView .setup-date-range label{min-width:0}
+#toolsView .setup-date-range input{width:100%;min-width:0}
+@media(max-width:700px){#toolsView .setup-date-range{grid-column:1/-1}}
 .car-manual-add-panel{margin:14px 0 18px;padding:16px 18px;border-color:rgba(197,43,50,.28);background:linear-gradient(145deg,rgba(197,43,50,.075),rgba(18,27,42,.96))}
 .car-manual-add-panel .catalog-note{margin:0 0 12px;color:var(--muted);font-size:12px;line-height:1.55}
 .car-manual-add-panel .actions-row{margin:0}
