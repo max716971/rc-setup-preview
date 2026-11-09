@@ -7029,7 +7029,7 @@ document.querySelectorAll('[data-shortcut-view]').forEach(button=>button.addEven
   }
   requestAnimationFrame(()=>requestAnimationFrame(()=>{
     const target=document.getElementById(targetId);
-    if(target)target.scrollIntoView({behavior:'smooth',block:'start'});
+    if(target){if(target.tagName==='DETAILS')target.open=true;target.scrollIntoView({behavior:'smooth',block:'start'});}
   }));
 }));
 document.querySelectorAll('[data-go-view]').forEach((button) => button.addEventListener('click', (event) => { event.preventDefault(); setView(button.dataset.goView); }));
