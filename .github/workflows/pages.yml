@@ -2,7 +2,7 @@ name: Deploy RC SETUP preview
 on:
   push:
     branches:
-      - preview-build
+      - main
   workflow_dispatch:
 
 permissions:
