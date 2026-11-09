@@ -57,8 +57,8 @@ assert(html.includes('app.js?v=169'), 'version app.js cohérente dans index.html
 assert(app.includes("navigator.serviceWorker.register('./sw.js?v=6'"), 'enregistrement du Service Worker versionné');
 assert(sw.includes("const CACHE_NAME = 'rc-setup-preview-v6'") && sw.includes('./app.js?v=169') && sw.includes('./app.css?v=61'), 'cache Service Worker cohérent');
 assert(sw.includes("/^rc-setup-preview-v\\d+$/.test(key) && key !== CACHE_NAME"), 'nettoyage limité aux caches de la prévisualisation');
-const sameOriginFetch = sw.slice(sw.indexOf('    try {\n      const response = await fetch(new Request(event.request, { cache: \'no-cache\' }));'));
-assert(sameOriginFetch.indexOf('fetch(new Request(event.request, { cache: \'no-cache\' }))') < sameOriginFetch.indexOf('const cached = await caches.match(event.request);\n      if (cached) return cached;'), 'revalidation réseau prioritaire avec secours hors ligne');
+const sameOriginFetch = sw.slice(sw.indexOf('    try {\n      const response = await fetch(event.request, { cache: \'no-cache\' });'));
+assert(sameOriginFetch.indexOf('fetch(event.request, { cache: \'no-cache\' })') < sameOriginFetch.indexOf('const cached = await caches.match(event.request);\n      if (cached) return cached;'), 'revalidation réseau prioritaire avec secours hors ligne');
 
 assert(app.includes('rc-setup-preview-v1') && materials.includes('rc-setup-preview-materials-v1') && backup.includes('rc-setup-preview-backups'), 'espaces de stockage propres à la prévisualisation');
 assert(!/rc-setup-beta/.test(app + materials + backup + sw), 'aucune clé bêta dans les fichiers de l’application');
